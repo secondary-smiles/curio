@@ -1,6 +1,6 @@
 <script lang="ts">
 	import SearchButton from './SearchButton.svelte';
-	import SubmitButton from './SubmitButton.svelte';
+	import SubmitWordButton from './SubmitWordButton.svelte';
 </script>
 
 <main>
@@ -15,7 +15,7 @@
 				<SearchButton />
 			</div>
 			<div id="submit-button">
-				<SubmitButton />
+				<SubmitWordButton />
 			</div>
 		</div>
 	</div>

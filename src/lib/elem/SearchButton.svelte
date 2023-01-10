@@ -8,6 +8,10 @@
 	function initInput(el: HTMLInputElement) {
 		el.focus();
 	}
+
+	function search() {
+		console.log('test');
+	}
 </script>
 
 <main>
@@ -15,14 +19,17 @@
 		<button id="search-button" on:click={toggleSearchMode}>search </button>
 	{/if}
 	{#if searchMode}
-		<input
-			id="search-box"
-			type="text"
-			name="search"
-			placeholder="search for a word.."
-			on:focusout={toggleSearchMode}
-			use:initInput
-		/>
+		<form on:submit={search}>
+			<input
+				id="search-box"
+				type="text"
+				name="query"
+				placeholder="search for a word.."
+				autocomplete="off"
+				on:focusout={toggleSearchMode}
+				use:initInput
+			/>
+		</form>
 	{/if}
 </main>
 
