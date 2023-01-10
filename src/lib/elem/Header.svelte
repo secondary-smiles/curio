@@ -11,8 +11,12 @@
 			<p id="title-meta">a collection of language</p>
 		</div>
 		<div id="header-buttons">
-			<SearchButton />
-			<SubmitButton />
+			<div id="search-button">
+				<SearchButton />
+			</div>
+			<div id="submit-button">
+				<SubmitButton />
+			</div>
 		</div>
 	</div>
 	<hr />
@@ -51,5 +55,13 @@
 
 	#title-meta {
 		color: var(--alt-text-color);
+	}
+
+	#search-button {
+		margin-right: 4px;
+	}
+
+	#submit-button {
+		margin-left: 4px;
 	}
 </style>
