@@ -5,5 +5,7 @@
 </script>
 
 <main>
-	<h2 id="result-title">Results for '{data.slug}'</h2>
+	<div id="title">
+		<h2 id="result-title">Results for '{data.query}'</h2>
+	</div>
 </main>

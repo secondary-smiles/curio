@@ -1,5 +1,9 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+
 	let searchMode = false;
+
+	let query = '';
 
 	function toggleSearchMode() {
 		searchMode = !searchMode;
@@ -9,8 +13,12 @@
 		el.focus();
 	}
 
-	function search() {
-		console.log('test');
+	function search(e: Event) {
+		e.preventDefault();
+		if (query) {
+			goto(`/r?query=${query}`, { invalidateAll: true });
+			query = '';
+		}
 	}
 </script>
 
@@ -26,6 +34,7 @@
 				name="query"
 				placeholder="search for a word.."
 				autocomplete="off"
+				bind:value={query}
 				on:focusout={toggleSearchMode}
 				use:initInput
 			/>
