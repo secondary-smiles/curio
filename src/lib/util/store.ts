@@ -9,7 +9,11 @@ const wordList: Word[] = [];
 const wordsLoadedStore = writable(wordList);
 const wordsDisplayStore = writable(wordList);
 
+// Firebase auth state
+const authStore = writable(false);
+
 export {
   wordsLoadedStore,
-  wordsDisplayStore
+  wordsDisplayStore,
+  authStore,
 }

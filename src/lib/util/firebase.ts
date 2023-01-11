@@ -79,4 +79,4 @@ async function searchWord(name: string) {
   return results;
 }
 
-export { getWord, searchWord }
+export { getWord, searchWord, app }
