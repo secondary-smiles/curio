@@ -29,6 +29,9 @@
 <style>
 	main {
 		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 	}
 
 	#divider-top {
@@ -49,5 +52,9 @@
 	#word-type {
 		margin-top: 0;
 		color: var(--accent-color);
+	}
+
+	#word-def {
+		max-width: 300px;
 	}
 </style>

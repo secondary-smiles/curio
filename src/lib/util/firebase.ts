@@ -23,7 +23,6 @@ let db = getFirestore(app);
 
 let wordsLoaded: Word[] = [];
 wordsLoadedStore.subscribe(value => {
-  console.log(value)
   wordsLoaded = value
 });
 
@@ -34,7 +33,6 @@ wordsLoaded = wordsLoaded;
 async function getWord(name: string) {
   for (let i = 0; i < wordsLoaded.length; i++) {
     if (wordsLoaded[i].query == name) {
-      console.log("cache")
       return wordsLoaded[i];
     }
   }
@@ -60,7 +58,25 @@ async function getWord(name: string) {
 }
 
 async function searchWord(name: string) {
-  console.log()
+  const endCode = name.replace(/.$/, (c) => {
+    return String.fromCharCode(c.charCodeAt(0) + 1);
+  });
+
+  const wordsRef = collection(db, "words");
+  const q = query(
+    wordsRef,
+    where("query", ">=", name),
+    where("query", "<=", endCode)
+  );
+
+  const snapshot = await getDocs(q);
+
+  const results: Word[] = [];
+  snapshot.forEach((doc) => {
+    results.push(doc.data() as Word);
+  })
+
+  return results;
 }
 
-export { getWord }
+export { getWord, searchWord }
