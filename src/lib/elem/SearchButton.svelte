@@ -43,21 +43,9 @@
 </main>
 
 <style>
-	input {
-		width: 65%;
-		border: 2px solid var(--alt-accent-color);
-		padding: 0.5em;
-
-		color: var(--text-color);
-
-		border-radius: 4px;
-		transition: width 0.3s ease-in-out;
-	}
-
 	input:hover,
 	input:focus {
 		width: 95%;
 
-		outline: none;
 	}
 </style>

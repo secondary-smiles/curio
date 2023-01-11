@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { googleAuthUser, authSignOut } from '$lib/util/firebase-auth';
 	import { authStore } from '$lib/util/store';
-</script>
+
+	import LoginPage from '$lib/elem/LoginPage.svelte';
+	</script>
 
 <main>
 	<button on:click={googleAuthUser}>auth</button>

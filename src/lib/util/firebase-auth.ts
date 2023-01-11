@@ -1,26 +1,9 @@
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, browserLocalPersistence, setPersistence } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, browserLocalPersistence, setPersistence, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 
 import { app } from "$lib/util/firebase";
 import { authStore } from "$lib/util/store";
 
 const auth = getAuth(app);
-
-async function googleAuthUser() {
-  setPersistence(auth, browserLocalPersistence).then(async () => {
-
-    const provider = new GoogleAuthProvider();
-
-    const signIn = await signInWithPopup(auth, provider).catch(err => {
-      console.error(err)
-    });
-
-    // console.log(auth);
-    // console.log(signIn);
-  }).catch((err) => {
-    console.error(err);
-  })
-
-}
 
 auth.onAuthStateChanged((user) => {
   if (user) {
@@ -30,10 +13,54 @@ auth.onAuthStateChanged((user) => {
   }
 })
 
-async function authSignOut() {
-  await signOut(auth).catch(err => {
-    console.error(err);
-  });
+async function googleAuthUser() {
+  try {
+
+    setPersistence(auth, browserLocalPersistence).then(async () => {
+
+      try {
+        const provider = new GoogleAuthProvider();
+
+        await signInWithPopup(auth, provider)
+      } catch (err) {
+        return err;
+      }
+
+    })
+  } catch (err) {
+    return err
+  }
+  return true;
 }
 
-export { googleAuthUser, authSignOut }
+async function emailAuthUser(email: string, password: string) {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    return err;
+  }
+
+  return true;
+}
+
+async function emailCreateUser(email: string, password: string) {
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    return err;
+  }
+
+  return true;
+}
+
+async function authSignOut() {
+  try {
+    await signOut(auth)
+  } catch (err) {
+    return err;
+  }
+
+  return true;
+}
+
+export { googleAuthUser, authSignOut, emailAuthUser, emailCreateUser }
