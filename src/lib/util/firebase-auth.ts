@@ -4,6 +4,7 @@ import { app } from "$lib/util/firebase";
 import { authStore } from "$lib/util/store";
 
 const auth = getAuth(app);
+auth.useDeviceLanguage();
 
 auth.onAuthStateChanged((user) => {
   if (user) {
@@ -14,53 +15,35 @@ auth.onAuthStateChanged((user) => {
 })
 
 async function googleAuthUser() {
-  try {
+  setPersistence(auth, browserLocalPersistence).then(async () => {
 
-    setPersistence(auth, browserLocalPersistence).then(async () => {
+    const provider = new GoogleAuthProvider();
 
-      try {
-        const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider).catch(err => {
+      throw err
+    });
+  }).catch((err) => {
+    throw err;
+  })
 
-        await signInWithPopup(auth, provider)
-      } catch (err) {
-        return err;
-      }
-
-    })
-  } catch (err) {
-    return err
-  }
-  return true;
 }
 
 async function emailAuthUser(email: string, password: string) {
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-  } catch (err) {
-    return err;
-  }
-
-  return true;
+  await signInWithEmailAndPassword(auth, email, password).catch(err => {
+    throw err;
+  })
 }
 
 async function emailCreateUser(email: string, password: string) {
-  try {
-    await createUserWithEmailAndPassword(auth, email, password);
-  } catch (err) {
-    return err;
-  }
-
-  return true;
+  await createUserWithEmailAndPassword(auth, email, password).catch(err => {
+    throw err;
+  })
 }
 
 async function authSignOut() {
-  try {
-    await signOut(auth)
-  } catch (err) {
-    return err;
-  }
-
-  return true;
+  await signOut(auth).catch(err => {
+    throw err;
+  });
 }
 
 export { googleAuthUser, authSignOut, emailAuthUser, emailCreateUser }
