@@ -1,4 +1,5 @@
 <script lang="ts">
+	import LogOutButton from './LogOutButton.svelte';
 	import SearchButton from './SearchButton.svelte';
 	import SubmitWordButton from './SubmitWordButton.svelte';
 </script>
@@ -17,6 +18,9 @@
 			<div id="submit-button">
 				<SubmitWordButton />
 			</div>
+			<div id="logout-button">
+				<LogOutButton />
+			</div>
 		</div>
 	</div>
 	<hr />
@@ -30,6 +34,10 @@
 	#header-buttons {
 		display: flex;
 		align-items: center;
+	}
+
+	#header-buttons > * {
+		margin: 0 4px;
 	}
 
 	#header-inner {
@@ -55,13 +63,5 @@
 
 	#title-meta {
 		color: var(--alt-text-color);
-	}
-
-	#search-button {
-		margin-right: 4px;
-	}
-
-	#submit-button {
-		margin-left: 4px;
 	}
 </style>

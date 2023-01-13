@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 
 import type { PageLoad } from "./$types";
-import type {Word} from "$lib/util/word";
+import type { Word } from "$lib/util/word";
 
 import { searchWord } from "$lib/util/firebase";
 

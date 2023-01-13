@@ -36,6 +36,8 @@ auth.onIdTokenChanged((user) => {
   }
 })
 
+currentUser.uid;
+
 async function googleAuthUser() {
   if (currentUser) {
     currentUser.reload();
@@ -83,4 +85,4 @@ async function authSignOut() {
   await signOut(auth);
 }
 
-export { googleAuthUser, authSignOut, emailAuthUser, emailCreateUser, emailVerifyUser }
+export { googleAuthUser, authSignOut, emailAuthUser, emailCreateUser, emailVerifyUser, currentUser }

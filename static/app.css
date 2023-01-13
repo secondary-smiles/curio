@@ -50,5 +50,7 @@ input {
   border-radius: 4px;
   transition: width 0.3s ease-in-out;
 
+  font-family: inherit;
+
   outline: none;
 }

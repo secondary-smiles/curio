@@ -41,6 +41,7 @@
 		} else if (currentMode == 1) {
 			try {
 				await emailCreateUser(email, password);
+				switchMode();
 			} catch (err) {
 				updateError(err);
 			}
@@ -98,15 +99,15 @@
 			<button on:click={emailVerifyUser} id="verify-button">resend verification email</button>
 		{/if}
 	</div>
-	<div id="email-password-form">
-		<form on:submit={login}>
-			<input type="text" bind:value={email} />
-			<input type="password" bind:value={password} />
-			<button id="submit-button">submit</button>
+	<div id="email-password-form-wrapper">
+		<form on:submit={login} id="email-password-form">
+			<input type="text" bind:value={email} placeholder="email" autocomplete="off" />
+			<input type="password" bind:value={password} placeholder="password" autocomplete="off" />
+			<div id="signin-buttons">
+				<button id="submit-button" type="submit">submit</button>
+				<button on:click={googleAuthUser} type="button">Sign In With Google</button>
+			</div>
 		</form>
-	</div>
-	<div id="signin-buttons">
-		<button on:click={googleAuthUser}>Sign In With Google</button>
 	</div>
 	<div id="mode-buttons">
 		<button on:click={switchMode}>{pageModes[Math.abs(currentMode - 1)]}</button>
@@ -119,7 +120,27 @@
 		outline: none;
 	}
 
+	h2 {
+		margin-bottom: 0;
+	}
+
+	button {
+		margin: 5px 0;
+	}
+
 	.error-text {
 		color: var(--accent-color);
+	}
+
+	#email-password-form {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	#email-password-form > * {
+		box-sizing: border-box;
+
+		margin: 5px 0;
 	}
 </style>
