@@ -12,8 +12,11 @@ const wordsDisplayStore = writable(wordList);
 // Firebase auth state
 const authStore = writable(false);
 
+const verifiedStore = writable(false);
+
 export {
   wordsLoadedStore,
   wordsDisplayStore,
   authStore,
+  verifiedStore,
 }

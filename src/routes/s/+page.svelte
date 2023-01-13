@@ -1,17 +1,17 @@
 <script lang="ts">
 	import { googleAuthUser, authSignOut } from '$lib/util/firebase-auth';
-	import { authStore } from '$lib/util/store';
+	import { authStore, verifiedStore } from '$lib/util/store';
 
 	import LoginPage from '$lib/elem/LoginPage.svelte';
-	</script>
+</script>
 
 <main>
 	<button on:click={googleAuthUser}>auth</button>
 	<button on:click={authSignOut}>out</button>
 
-	{#if $authStore}
+	{#if $authStore && $verifiedStore}
 		<p>signed in</p>
 	{:else}
 		<LoginPage />
-		{/if}
+	{/if}
 </main>

@@ -1,5 +1,12 @@
 <script lang="ts">
-	import { googleAuthUser, emailAuthUser, emailCreateUser } from '$lib/util/firebase-auth';
+	import {
+		googleAuthUser,
+		emailAuthUser,
+		emailCreateUser,
+		emailVerifyUser
+	} from '$lib/util/firebase-auth';
+
+	import { verifiedStore, authStore } from '$lib/util/store';
 
 	let repeatCount = 1;
 	let backupErrorText = '';
@@ -40,6 +47,11 @@
 		} else {
 			errorText = 'math is broken';
 		}
+
+		if ($authStore && !$verifiedStore) {
+			errorText = 'loading';
+			errorText = 'check email to verify account and then login';
+		}
 	}
 
 	function updateError(err: any) {
@@ -75,10 +87,15 @@
 	<div id="error-display">
 		{#if errorText}
 			{#key repeatCount}
-				<p id="error-text">
+				<p class="error-text">
 					{errorText} (x{repeatCount})
 				</p>
 			{/key}
+		{/if}
+	</div>
+	<div id="email-verify">
+		{#if $authStore && !$verifiedStore}
+			<button on:click={emailVerifyUser} id="verify-button">resend verification email</button>
 		{/if}
 	</div>
 	<div id="email-password-form">
@@ -91,7 +108,9 @@
 	<div id="signin-buttons">
 		<button on:click={googleAuthUser}>Sign In With Google</button>
 	</div>
-	<button on:click={switchMode}>{pageModes[Math.abs(currentMode - 1)]}</button>
+	<div id="mode-buttons">
+		<button on:click={switchMode}>{pageModes[Math.abs(currentMode - 1)]}</button>
+	</div>
 </main>
 
 <style>
@@ -100,7 +119,7 @@
 		outline: none;
 	}
 
-	#error-text {
+	.error-text {
 		color: var(--accent-color);
 	}
 </style>
