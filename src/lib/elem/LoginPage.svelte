@@ -23,9 +23,7 @@
 		currentMode = currentMode == 0 ? 1 : 0;
 	}
 
-	async function login(e: Event) {
-		e.preventDefault();
-
+	async function login() {
 		if (!email || !password) {
 			errorText = 'loading';
 			errorText = 'email or password fields empty';
@@ -100,7 +98,7 @@
 		{/if}
 	</div>
 	<div id="email-password-form-wrapper">
-		<form on:submit={login} id="email-password-form">
+		<form on:submit|preventDefault={login} id="email-password-form">
 			<input type="text" bind:value={email} placeholder="email" autocomplete="off" />
 			<input type="password" bind:value={password} placeholder="password" autocomplete="off" />
 			<div id="signin-buttons">
@@ -126,10 +124,6 @@
 
 	button {
 		margin: 5px 0;
-	}
-
-	.error-text {
-		color: var(--accent-color);
 	}
 
 	#email-password-form {

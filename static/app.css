@@ -58,3 +58,7 @@ textarea {
 
   outline: none;
 }
+
+.error-text {
+  color: var(--accent-color);
+}
