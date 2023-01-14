@@ -25,6 +25,8 @@ select {
   padding: 0.5em;
   border-radius: 4px;
 
+  outline: none;
+
   color: var(--text-color);
   font-weight: normal;
 
@@ -41,7 +43,8 @@ button:active {
   font-weight: bold;
 }
 
-input {
+input,
+textarea {
   width: 65%;
   border: 2px solid var(--alt-accent-color);
   padding: 0.5em;
