@@ -1,6 +1,14 @@
 <script lang="ts">
+	import { serverTimestamp } from 'firebase/firestore/lite';
+
+	import { currentUser } from '$lib/util/firebase-auth';
+
+	import { wordExistsCount } from '$lib/util/firebase';
+
 	import { wordMap } from '$lib/util/word';
 	import type { WordType } from '$lib/util/word';
+
+	import type { Word } from '$lib/util/word';
 
 	let errorText: string;
 
@@ -8,9 +16,9 @@
 	let type: WordType;
 	let def: string;
 
-	function submit() {
+	async function submit() {
 		try {
-			wordOk();
+			await wordOk();
 		} catch (err) {
 			if (!(err instanceof Error)) {
 				return;
@@ -20,12 +28,26 @@
 		}
 
 		errorText = '';
+
+		let newWord: Word = {
+			word: word,
+			type: type,
+			def: def,
+			query: word.toLowerCase(),
+			time: serverTimestamp(),
+			uid: currentUser!.uid ?? 'unknown'
+		};
+
+		console.log(newWord);
 	}
 
-	function wordOk() {
+	async function wordOk() {
 		if (!word || !type || !def) {
 			throw new Error('all fields must be filled');
 		}
+
+		word = word.trim();
+		def = def.trim();
 
 		if (word.length > 45) {
 			throw new Error(`'${word.slice(0, 45)}..' is greater than 45 characters`);
@@ -37,6 +59,10 @@
 
 		if (def.length > 2000) {
 			throw new Error('word definition is greater than 2000 characters');
+		}
+
+		if ((await wordExistsCount(word, type)) > 0) {
+			throw new Error(`'${word}' has already been defined`);
 		}
 
 		return true;

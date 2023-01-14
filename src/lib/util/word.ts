@@ -1,4 +1,4 @@
-import type { Timestamp } from "firebase/firestore";
+import type { Timestamp, FieldValue } from "firebase/firestore";
 
 type WordTypeAbv = "n" | "v" | "adj" | "adv" | "prep" | "ideo" | "interj" | "pn" | "error";
 type WordTypeWords = "noun" | "verb" | "adjective" | "adverb" | "preposition" | "ideophone" | "interjection" | "pronoun" | "error";
@@ -13,7 +13,7 @@ interface Word {
   type: WordType;
   def: string;
   query: string;
-  time: Timestamp;
+  time: Timestamp | FieldValue;
   uid: string;
 }
 

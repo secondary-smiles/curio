@@ -5,7 +5,8 @@ import type { DocumentData } from "firebase/firestore/lite";
 
 import { DBNotFoundError } from "$lib/util/error";
 import { wordsLoadedStore } from '$lib/util/store';
-import type { Word } from '$lib/util/word';
+
+import type { Word, WordType } from '$lib/util/word';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCVpwVVAkJEGf9R40b2Lqes4NG1YtkXVos",
@@ -79,4 +80,27 @@ async function searchWord(name: string) {
   return results;
 }
 
-export { getWord, searchWord, app }
+async function wordExistsCount(word: string, type: WordType) {
+  console.log(word, type)
+  
+  const wordsRef = collection(db, "words");
+  const q = query(
+    wordsRef,
+    where("word", "==", word),
+    where("type.abv", "==", type.abv)
+  );
+
+  const snapshot = await getDocs(q);
+
+  let numResults = 0;
+  snapshot.forEach((doc) => {
+    numResults++;
+
+    wordsLoaded.push(doc.data() as Word);
+    wordsLoadedStore.set(wordsLoaded)
+  });
+
+  return numResults
+}
+
+export { getWord, searchWord, app, wordExistsCount }
