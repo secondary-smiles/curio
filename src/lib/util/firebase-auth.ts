@@ -13,7 +13,7 @@ import {
 import type { User } from "firebase/auth";
 
 import { app } from "$lib/util/firebase";
-import { authStore, verifiedStore } from "$lib/util/store";
+import { authStore, loadedAuthStore, verifiedStore } from "$lib/util/store";
 
 const auth = getAuth(app);
 auth.useDeviceLanguage();
@@ -21,6 +21,7 @@ auth.useDeviceLanguage();
 let currentUser: User | null;
 
 auth.onIdTokenChanged((user) => {
+  loadedAuthStore.set(true);
   if (user) {
     currentUser = user;
     authStore.set(true);
@@ -35,8 +36,6 @@ auth.onIdTokenChanged((user) => {
     verifiedStore.set(false);
   }
 })
-
-currentUser.uid;
 
 async function googleAuthUser() {
   if (currentUser) {

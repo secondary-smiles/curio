@@ -20,7 +20,8 @@ hr {
   border-top: 2px solid var(--alt-accent-color);
 }
 
-button {
+button,
+select {
   padding: 0.5em;
   border-radius: 4px;
 
