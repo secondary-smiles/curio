@@ -1,18 +1,31 @@
 <script lang="ts">
 	import type { Word } from '$lib/util/word';
-	import ColorHash from "color-hash";
+	import type { Timestamp } from 'firebase/firestore/lite';
+
+	import ColorHash from 'color-hash';
+	import dayjs from 'dayjs';
 
 	export let word: Word;
 
 	const colorHash = new ColorHash();
-	
 	const color = colorHash.hex(word.uid);
+
+	const date: Timestamp = word.time as Timestamp;
+	let time: Date | string = date.toDate();
+	time = dayjs(time.toLocaleString()).format('YYYY-MM-DD, hh:mm');
 </script>
 
 <main>
 	<div id="title">
 		<h2 id="word-title">{word.word}</h2>
 		<p id="word-type">{word.type.abv}.</p>
+	<div id="user-info">
+		<div id="user-color">
+			<div id="color-display" style="background: {color};" />
+			<p id="user-hex">{color}</p>
+		</div>
+		<p id="posted-time">{time}</p>
+	</div>
 	</div>
 	<hr id="divider-top" />
 	<div id="word-def">
@@ -51,5 +64,30 @@
 
 	#word-def {
 		max-width: 300px;
+	}
+
+	#user-info {
+		display: flex;
+		justify-content: space-between;
+
+	}
+
+	#user-color {
+		display: flex;
+		align-items: center;
+	}
+
+	#color-display {
+		width: 10px;
+		height: 10px;
+
+		border-radius: 2px;
+
+		margin: 2px;
+	}
+
+	#user-hex,
+	#posted-time {
+		color: var(--alt-accent-color);
 	}
 </style>

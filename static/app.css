@@ -3,7 +3,6 @@
 * {
   --text-color: #c1c7c6;
   --alt-text-color: #4c535e;
-  --accent-color: #c49a6d;
   --alt-accent-color: #4c535e;
   --bg-color: #2c2f34;
 
@@ -21,7 +20,8 @@ hr {
 }
 
 button,
-select {
+select,
+.button {
   padding: 0.5em;
   border-radius: 4px;
 
