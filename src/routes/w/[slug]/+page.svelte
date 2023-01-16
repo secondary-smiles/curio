@@ -4,6 +4,12 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+
+	console.log(data.words);
 </script>
 
-<Word word={data.word} />
+<main>
+	{#each data.words as word}
+		<Word {word} />
+	{/each}
+</main>

@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 
-import { getFirestore, collection, query, where, getDocs, } from "firebase/firestore/lite";
-import type { DocumentData } from "firebase/firestore/lite";
+import { getFirestore, collection, query, where, getDocs, addDoc, } from "firebase/firestore/lite";
 
 import { DBNotFoundError } from "$lib/util/error";
 import { wordsLoadedStore } from '$lib/util/store';
@@ -34,7 +33,7 @@ wordsLoaded = wordsLoaded;
 async function getWord(name: string) {
   for (let i = 0; i < wordsLoaded.length; i++) {
     if (wordsLoaded[i].query == name) {
-      return wordsLoaded[i];
+      return [wordsLoaded[i]];
     }
   }
 
@@ -43,19 +42,18 @@ async function getWord(name: string) {
 
   const snapshot = await getDocs(q);
 
-  const docs: DocumentData = []
+  const docs: Word[] = []
   snapshot.forEach((doc) => {
-    docs.push(doc.data());
+    docs.push(doc.data() as Word);
+    wordsLoaded.push(doc.data() as Word);
   })
+  wordsLoadedStore.set(wordsLoaded);
 
   if (docs.length < 1) {
     throw new DBNotFoundError(`No such word '${name}' in database`);
   }
 
-  wordsLoaded.push(docs[0])
-  wordsLoadedStore.set(wordsLoaded);
-
-  return docs[0];
+  return docs;
 }
 
 async function searchWord(name: string) {
@@ -81,8 +79,6 @@ async function searchWord(name: string) {
 }
 
 async function wordExistsCount(word: string, type: WordType) {
-  console.log(word, type)
-  
   const wordsRef = collection(db, "words");
   const q = query(
     wordsRef,
@@ -103,4 +99,9 @@ async function wordExistsCount(word: string, type: WordType) {
   return numResults
 }
 
-export { getWord, searchWord, app, wordExistsCount }
+async function uploadWord(word: Word) {
+  const wordsRef = collection(db, "words");
+  await addDoc(wordsRef, word);
+}
+
+export { getWord, searchWord, app, wordExistsCount, uploadWord }

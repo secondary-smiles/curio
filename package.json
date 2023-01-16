@@ -29,6 +29,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@types/color-hash": "^1.0.2",
+		"color-hash": "^2.0.2",
 		"firebase": "^9.15.0"
 	}
 }

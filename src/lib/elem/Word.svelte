@@ -1,23 +1,18 @@
 <script lang="ts">
 	import type { Word } from '$lib/util/word';
+	import ColorHash from "color-hash";
 
 	export let word: Word;
 
-	$: {
-		if (!word) {
-			word = {
-				word: 'error',
-				type: 'error',
-				def: 'error'
-			};
-		}
-	}
+	const colorHash = new ColorHash();
+	
+	const color = colorHash.hex(word.uid);
 </script>
 
 <main>
 	<div id="title">
 		<h2 id="word-title">{word.word}</h2>
-		<p id="word-type">{word.type}.</p>
+		<p id="word-type">{word.type.abv}.</p>
 	</div>
 	<hr id="divider-top" />
 	<div id="word-def">

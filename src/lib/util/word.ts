@@ -1,7 +1,7 @@
 import type { Timestamp, FieldValue } from "firebase/firestore";
 
-type WordTypeAbv = "n" | "v" | "adj" | "adv" | "prep" | "ideo" | "interj" | "pn" | "error";
-type WordTypeWords = "noun" | "verb" | "adjective" | "adverb" | "preposition" | "ideophone" | "interjection" | "pronoun" | "error";
+type WordTypeAbv = "n" | "v" | "adj" | "adv" | "prep" | "ideo" | "interj" | "pn";
+type WordTypeWords = "noun" | "verb" | "adjective" | "adverb" | "preposition" | "ideophone" | "interjection" | "pronoun";
 
 interface WordType {
   type: WordTypeWords;

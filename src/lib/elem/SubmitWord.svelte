@@ -3,12 +3,13 @@
 
 	import { currentUser } from '$lib/util/firebase-auth';
 
-	import { wordExistsCount } from '$lib/util/firebase';
+	import { uploadWord, wordExistsCount } from '$lib/util/firebase';
 
 	import { wordMap } from '$lib/util/word';
 	import type { WordType } from '$lib/util/word';
 
 	import type { Word } from '$lib/util/word';
+	import { goto } from '$app/navigation';
 
 	let errorText: string;
 
@@ -38,7 +39,9 @@
 			uid: currentUser!.uid ?? 'unknown'
 		};
 
-		console.log(newWord);
+		await uploadWord(newWord).then(() => {
+			goto(`/w/${newWord.word}`, { invalidateAll: true });
+		});
 	}
 
 	async function wordOk() {
@@ -50,7 +53,11 @@
 		def = def.trim();
 
 		if (word.length > 45) {
-			throw new Error(`'${word.slice(0, 45)}..' is greater than 45 characters`);
+			throw new Error(`word '${word.slice(0, 45)}..' must be shorter than 45 characters`);
+		}
+
+		if (word.length < 3) {
+			throw new Error(`word '${word}' must be at least 3 characters`);
 		}
 
 		if (!type) {
@@ -58,7 +65,11 @@
 		}
 
 		if (def.length > 2000) {
-			throw new Error('word definition is greater than 2000 characters');
+			throw new Error('definition must be shorter than 2000 characters');
+		}
+
+		if (def.split(' ').length < 3) {
+			throw new Error('definition must be at least 3 words');
 		}
 
 		if ((await wordExistsCount(word, type)) > 0) {
