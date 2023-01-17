@@ -33,6 +33,8 @@ select,
   border: 2px solid var(--alt-accent-color);
 
   transition: box-shadow 0.3s ease-in-out;
+
+  cursor: pointer;
 }
 
 button:hover {

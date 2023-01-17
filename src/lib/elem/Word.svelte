@@ -2,7 +2,8 @@
 	import type { Word } from '$lib/util/word';
 	import type { Timestamp } from 'firebase/firestore/lite';
 
-	import ColorHash from 'color-hash';
+	import { ColorHash } from '$lib/util/color';
+
 	import dayjs from 'dayjs';
 
 	export let word: Word;

@@ -23,5 +23,53 @@ function contrast(first: RGBColor, second: RGBColor) {
   return (brightest + 0.05) / (darkest + 0.05);
 }
 
+// https://stackoverflow.com/questions/3426404/create-a-hexadecimal-colour-based-on-a-string-with-javascript
+class ColorHash {
+  colors: number[];
+
+  constructor(data: string = "") {
+    this.colors = [];
+
+    this.hash(data);
+  }
+
+  hash(data: string) {
+    this.colors = [];
+
+    // Reduce uniformity by prepending arbitrary character
+    data = "x" + data;
+
+    let hash = 0;
+
+    for (let i = 0; i < data.length; i++) {
+      hash = data.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+
+    for (let i = 0; i < 3; i++) {
+      const value = (hash >> (i * 8)) & 0xFF;
+      this.colors.push(value);
+    }
+  }
+
+  rgb(data: string) {
+    this.hash(data);
+
+    return this.colors;
+  }
+
+  hex(data: string) {
+    this.hash(data);
+
+    function toHex(c: number) {
+      const hex = c.toString(16);
+      return hex.length == 1 ? "0" + hex : hex;
+    }
+
+    return "#" + toHex(this.colors[0]) + toHex(this.colors[1]) + toHex(this.colors[2]);
+  }
+}
+
+
 export type { RGBColor }
-export { contrast }
+export { contrast, ColorHash }
