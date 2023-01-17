@@ -125,4 +125,4 @@ async function uploadWord(word: Word) {
   await addDoc(wordsRef, word);
 }
 
-export { getWord, searchWord, app, wordExistsCount, uploadWord }
+export { getWord, searchWord, app, wordExistsCount, uploadWord, getLatestWords }
