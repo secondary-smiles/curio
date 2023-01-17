@@ -19,13 +19,15 @@
 	<div id="title">
 		<h2 id="word-title">{word.word}</h2>
 		<p id="word-type">{word.type.abv}.</p>
-	<div id="user-info">
-		<div id="user-color">
-			<div id="color-display" style="background: {color};" />
-			<p id="user-hex">{color}</p>
+		<div id="user-info">
+			<div id="user-color">
+				<div id="color-display" style="background: {color};" />
+				<p id="user-hex">{color}</p>
+			</div>
+			<div id="user-time">
+				<p id="posted-time">{time}</p>
+			</div>
 		</div>
-		<p id="posted-time">{time}</p>
-	</div>
 	</div>
 	<hr id="divider-top" />
 	<div id="word-def">
@@ -64,17 +66,18 @@
 
 	#word-def {
 		max-width: 300px;
+		word-break: break-word;
 	}
 
 	#user-info {
 		display: flex;
 		justify-content: space-between;
-
 	}
 
 	#user-color {
 		display: flex;
 		align-items: center;
+		margin: 0 4px;
 	}
 
 	#color-display {
@@ -89,5 +92,9 @@
 	#user-hex,
 	#posted-time {
 		color: var(--alt-accent-color);
+	}
+
+	#user-time {
+		margin: 0 4px;
 	}
 </style>

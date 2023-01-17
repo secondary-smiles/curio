@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 
-import { getFirestore, collection, query, where, getDocs, addDoc, } from "firebase/firestore/lite";
+import { getFirestore, collection, query, where, getDocs, addDoc, orderBy, limit, } from "firebase/firestore/lite";
 
 import { DBNotFoundError } from "$lib/util/error";
 import { wordsLoadedStore } from '$lib/util/store';
@@ -72,8 +72,11 @@ async function searchWord(name: string) {
 
   const results: Word[] = [];
   snapshot.forEach((doc) => {
+    wordsLoaded.push(doc.data() as Word);
+
     results.push(doc.data() as Word);
   })
+  wordsLoadedStore.set(wordsLoaded);
 
   return results;
 }
@@ -93,10 +96,28 @@ async function wordExistsCount(word: string, type: WordType) {
     numResults++;
 
     wordsLoaded.push(doc.data() as Word);
-    wordsLoadedStore.set(wordsLoaded)
   });
+  wordsLoadedStore.set(wordsLoaded)
 
   return numResults
+}
+
+async function getLatestWords(num: number = 3) {
+  const wordsRef = collection(db, "words");
+  const q = query(wordsRef, orderBy("time", "desc"), limit(num));
+
+  const snapshot = await getDocs(q);
+
+  const results: Word[] = [];
+  snapshot.forEach(doc => {
+    wordsLoaded.push(doc.data() as Word);
+
+    results.push(doc.data() as Word);
+  })
+
+  wordsLoadedStore.set(wordsLoaded);
+
+  return results;
 }
 
 async function uploadWord(word: Word) {
