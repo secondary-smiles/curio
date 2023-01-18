@@ -17,5 +17,14 @@
 				}}>Create '{message}'</button
 			>
 		{/if}
+	{:else}
+		<h2>{$page.status}</h2>
+		<p>{$page.error.message}</p>
 	{/if}
 </main>
+
+<style>
+	main {
+		text-align: center;
+	}
+</style>
