@@ -24,6 +24,8 @@
 	}
 
 	async function login() {
+		errorText = 'loading';
+
 		if (!email || !password) {
 			errorText = 'loading';
 			errorText = 'email or password fields empty';

@@ -80,7 +80,7 @@ async function wordExistsCount(word: string, type: WordType) {
   return numResults
 }
 
-async function getLatestWords(num: number = 3) {
+async function getLatestWords(num: number = 10) {
   const wordsRef = collection(db, "words");
   const q = query(wordsRef, orderBy("time", "desc"), limit(num));
 
@@ -99,7 +99,7 @@ async function getLatestWords(num: number = 3) {
   return results;
 }
 
-async function getNextWords(num: number = 3) {
+async function getNextWords(num: number = 10) {
   let paginatedAll = false;
   paginatedAllWordsStore.subscribe((value) => paginatedAll = value);
 
@@ -141,4 +141,80 @@ async function uploadWord(word: Word) {
   await addDoc(wordsRef, word);
 }
 
-export { getWord, searchWord, app, wordExistsCount, uploadWord, getLatestWords, getNextWords }
+async function getUserWords(uid: string, num: number = 10) {
+  const wordsRef = collection(db, "words");
+
+  const q = query(
+    wordsRef,
+    where("uid", "==", uid),
+    orderBy('time', "desc"),
+    limit(num)
+  );
+
+  const snapshot = await getDocs(q);
+
+  const results: Word[] = [];
+  snapshot.forEach((doc) => {
+    results.push(doc.data() as Word)
+  })
+
+  if (results.length < 1) {
+    throw new DBNotFoundError(`'${uid}' is not a valid user`)
+  }
+
+  // @ts-ignore
+  wordPaginationIndexStore.set(snapshot.docs[snapshot.docs.length - 1]);
+
+  return results;
+}
+
+async function getNextUserWords(uid: string, num: number = 10) {
+  let paginatedAll = false;
+  paginatedAllWordsStore.subscribe((value) => paginatedAll = value);
+
+  let latestIndex = 0;
+  wordPaginationIndexStore.subscribe((value) => latestIndex = value);
+
+  if (paginatedAll) {
+    throw new Error("reached end of words")
+  }
+
+  const wordsRef = collection(db, "words");
+
+  const q = query(
+    wordsRef,
+    where("uid", "==", uid),
+    orderBy("time", "desc"),
+    limit(num),
+    startAfter(latestIndex)
+  )
+
+  const snapshot = await getDocs(q);
+
+  const results: Word[] = [];
+  snapshot.forEach(doc => {
+    results.push(doc.data() as Word);
+  });
+
+  if (results.length < 1) {
+    paginatedAllWordsStore.set(true);
+    throw new Error("reached end of words");
+  }
+
+  // @ts-ignore
+  wordPaginationIndexStore.set(snapshot.docs[snapshot.docs.length - 1]);
+
+  return results;
+}
+
+export {
+  getWord,
+  searchWord,
+  app,
+  wordExistsCount,
+  uploadWord,
+  getLatestWords,
+  getNextWords,
+  getUserWords,
+  getNextUserWords
+}

@@ -42,8 +42,4 @@
 	button {
 		margin-top: 5%;
 	}
-
-	.subtext {
-		color: var(--alt-accent-color);
-	}
 </style>

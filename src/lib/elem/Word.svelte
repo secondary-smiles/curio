@@ -18,12 +18,17 @@
 
 <main>
 	<div id="title">
-		<a href="/w/{word.word}"><h2 id="word-title">{word.word}</h2></a>
+		<h2 id="word-title">
+			<a href="/w/{word.word}">{word.word}</a>
+		</h2>
+
 		<p id="word-type">{word.type.abv}.</p>
 		<div id="user-info">
 			<div id="user-color">
-				<div id="color-display" style="background: {color};" />
-				<p id="user-hex">{color}</p>
+				<a href="/u/{word.uid}">
+					<div id="color-display" style="background: {color};" />
+					<p id="user-hex">{color}</p>
+				</a>
 			</div>
 			<div id="user-time">
 				<p id="posted-time">{time}</p>
@@ -73,15 +78,17 @@
 	#user-info {
 		display: flex;
 		justify-content: space-between;
+
+		cursor: pointer;
 	}
 
-	#user-color {
+	#user-color > a {
 		display: flex;
 		align-items: center;
 		margin: 0 4px;
 	}
 
-	#color-display {
+		#color-display {
 		width: 10px;
 		height: 10px;
 

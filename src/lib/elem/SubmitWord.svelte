@@ -13,12 +13,12 @@
 
 	let errorText: string;
 
-	export let word: string = "";
+	export let word: string = '';
 	let type: WordType;
 	let def: string;
 
 	async function submit() {
-		errorText = 'uploading..'
+		errorText = 'uploading..';
 		try {
 			await wordOk();
 		} catch (err) {
@@ -41,7 +41,7 @@
 		};
 
 		await uploadWord(newWord).then(() => {
-			goto(`/w/${newWord.word}`, { invalidateAll: true });
+			goto(`/w/${newWord.word}`);
 		});
 	}
 
@@ -50,7 +50,7 @@
 			throw new Error('all fields must be filled');
 		}
 
-		word = word.trim().split(" ").join("-");
+		word = word.trim().split(' ').join('-');
 		def = def.trim();
 
 		if (word.length > 45) {
