@@ -18,7 +18,7 @@
 
 <main>
 	<div id="title">
-		<h2 id="word-title">{word.word}</h2>
+		<a href="/w/{word.word}"><h2 id="word-title">{word.word}</h2></a>
 		<p id="word-type">{word.type.abv}.</p>
 		<div id="user-info">
 			<div id="user-color">

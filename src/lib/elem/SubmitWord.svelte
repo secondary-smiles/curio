@@ -18,6 +18,7 @@
 	let def: string;
 
 	async function submit() {
+		errorText = 'uploading..'
 		try {
 			await wordOk();
 		} catch (err) {
@@ -49,7 +50,7 @@
 			throw new Error('all fields must be filled');
 		}
 
-		word = word.trim();
+		word = word.trim().split(" ").join("-");
 		def = def.trim();
 
 		if (word.length > 45) {
@@ -72,7 +73,7 @@
 			throw new Error('definition must be at least 3 words');
 		}
 
-		if ((await wordExistsCount(word, type)) > 0) {
+		if ((await wordExistsCount(word.toLowerCase(), type)) > 0) {
 			throw new Error(`'${word}' has already been defined`);
 		}
 

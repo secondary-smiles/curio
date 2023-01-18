@@ -3,7 +3,6 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, query, where, getDocs, addDoc, orderBy, limit, } from "firebase/firestore/lite";
 
 import { DBNotFoundError } from "$lib/util/error";
-import { wordsLoadedStore } from '$lib/util/store';
 
 import type { Word, WordType } from '$lib/util/word';
 
@@ -21,22 +20,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 let db = getFirestore(app);
 
-let wordsLoaded: Word[] = [];
-wordsLoadedStore.subscribe(value => {
-  wordsLoaded = value
-});
-
-// Doesn't work otherwise
-wordsLoaded = wordsLoaded;
-
 // Util functions
 async function getWord(name: string) {
-  for (let i = 0; i < wordsLoaded.length; i++) {
-    if (wordsLoaded[i].query == name) {
-      return [wordsLoaded[i]];
-    }
-  }
-
   const wordsRef = collection(db, "words");
   const q = query(wordsRef, where("query", "==", name));
 
@@ -45,9 +30,7 @@ async function getWord(name: string) {
   const docs: Word[] = []
   snapshot.forEach((doc) => {
     docs.push(doc.data() as Word);
-    wordsLoaded.push(doc.data() as Word);
   })
-  wordsLoadedStore.set(wordsLoaded);
 
   if (docs.length < 1) {
     throw new DBNotFoundError(`No such word '${name}' in database`);
@@ -67,16 +50,13 @@ async function searchWord(name: string) {
     where("query", ">=", name),
     where("query", "<=", endCode)
   );
-
   const snapshot = await getDocs(q);
 
   const results: Word[] = [];
   snapshot.forEach((doc) => {
-    wordsLoaded.push(doc.data() as Word);
 
     results.push(doc.data() as Word);
   })
-  wordsLoadedStore.set(wordsLoaded);
 
   return results;
 }
@@ -85,19 +65,16 @@ async function wordExistsCount(word: string, type: WordType) {
   const wordsRef = collection(db, "words");
   const q = query(
     wordsRef,
-    where("word", "==", word),
+    where("query", "==", word),
     where("type.abv", "==", type.abv)
   );
 
   const snapshot = await getDocs(q);
 
   let numResults = 0;
-  snapshot.forEach((doc) => {
+  snapshot.forEach((_) => {
     numResults++;
-
-    wordsLoaded.push(doc.data() as Word);
   });
-  wordsLoadedStore.set(wordsLoaded)
 
   return numResults
 }
@@ -110,12 +87,10 @@ async function getLatestWords(num: number = 3) {
 
   const results: Word[] = [];
   snapshot.forEach(doc => {
-    wordsLoaded.push(doc.data() as Word);
 
     results.push(doc.data() as Word);
   })
 
-  wordsLoadedStore.set(wordsLoaded);
 
   return results;
 }
