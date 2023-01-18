@@ -14,7 +14,7 @@ export const load: PageLoad = async ({ url }) => {
   const words: Word[] = await searchWord(query);
 
   return {
-    query: url.searchParams.get('query'),
+    query: query,
     words: words,
   }
 }

@@ -4,6 +4,10 @@
 	import LoginPage from '$lib/elem/LoginPage.svelte';
 	import SubmitWord from '$lib/elem/SubmitWord.svelte';
 
+	import type { PageData } from './$types';
+
+	export let data: PageData;
+
 	let authLoaded: boolean;
 	loadedAuthStore.subscribe((value) => (authLoaded = value));
 </script>
@@ -11,7 +15,7 @@
 <main>
 	{#if authLoaded}
 		{#if $authStore && $verifiedStore}
-			<SubmitWord />
+			<SubmitWord word={data.fill} />
 		{:else}
 			<LoginPage />
 		{/if}

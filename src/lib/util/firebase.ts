@@ -33,7 +33,7 @@ async function getWord(name: string) {
   })
 
   if (docs.length < 1) {
-    throw new DBNotFoundError(`No such word '${name}' in database`);
+    throw new DBNotFoundError(name);
   }
 
   return docs;

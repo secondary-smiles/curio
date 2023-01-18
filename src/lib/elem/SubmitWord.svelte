@@ -13,7 +13,7 @@
 
 	let errorText: string;
 
-	let word: string;
+	export let word: string = "";
 	let type: WordType;
 	let def: string;
 
