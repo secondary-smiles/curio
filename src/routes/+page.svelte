@@ -20,13 +20,17 @@
 </script>
 
 <main>
-	{#each wordList as word}
-		<Word {word} />
-	{/each}
-	{#if !buttonStatus}
-		<button disabled={buttonStatus} on:click={getMoreWords}>load more</button>
+	{#if wordList.length > 1}
+		{#each wordList as word}
+			<Word {word} />
+		{/each}
+		{#if !buttonStatus}
+			<button disabled={buttonStatus} on:click={getMoreWords}>load more</button>
+		{:else}
+			<p class="subtext">end of words.</p>
+		{/if}
 	{:else}
-		<p>end of words.</p>
+		<p class="subtext">no words exist.</p>
 	{/if}
 </main>
 
@@ -39,7 +43,7 @@
 		margin-top: 5%;
 	}
 
-	p {
+	.subtext {
 		color: var(--alt-accent-color);
 	}
 </style>
