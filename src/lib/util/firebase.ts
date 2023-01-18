@@ -1,10 +1,11 @@
 import { initializeApp } from "firebase/app";
 
-import { getFirestore, collection, query, where, getDocs, addDoc, orderBy, limit, } from "firebase/firestore/lite";
+import { getFirestore, collection, query, where, getDocs, addDoc, orderBy, limit, startAfter, } from "firebase/firestore/lite";
 
 import { DBNotFoundError } from "$lib/util/error";
 
 import type { Word, WordType } from '$lib/util/word';
+import { paginatedAllWordsStore, wordPaginationIndexStore } from "./store";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCVpwVVAkJEGf9R40b2Lqes4NG1YtkXVos",
@@ -92,6 +93,46 @@ async function getLatestWords(num: number = 3) {
   })
 
 
+  // @ts-ignore
+  wordPaginationIndexStore.set(snapshot.docs[snapshot.docs.length - 1]);
+
+  return results;
+}
+
+async function getNextWords(num: number = 3) {
+  let paginatedAll = false;
+  paginatedAllWordsStore.subscribe((value) => paginatedAll = value);
+
+  let latestIndex = 0;
+  wordPaginationIndexStore.subscribe((value) => latestIndex = value);
+
+  if (paginatedAll) {
+    throw new Error("reached end of words")
+  }
+
+  const wordsRef = collection(db, "words");
+  const q = query(
+    wordsRef,
+    orderBy('time', 'desc'),
+    startAfter(latestIndex),
+    limit(num)
+  );
+
+  const snapshot = await getDocs(q);
+
+  const results: Word[] = [];
+  snapshot.forEach(doc => {
+    results.push(doc.data() as Word);
+  });
+
+  if (results.length < 1) {
+    paginatedAllWordsStore.set(true);
+    throw new Error("reached end of words");
+  }
+
+  // @ts-ignore
+  wordPaginationIndexStore.set(snapshot.docs[snapshot.docs.length - 1]);
+
   return results;
 }
 
@@ -100,4 +141,4 @@ async function uploadWord(word: Word) {
   await addDoc(wordsRef, word);
 }
 
-export { getWord, searchWord, app, wordExistsCount, uploadWord, getLatestWords }
+export { getWord, searchWord, app, wordExistsCount, uploadWord, getLatestWords, getNextWords }
