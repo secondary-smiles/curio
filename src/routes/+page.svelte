@@ -20,7 +20,7 @@
 </script>
 
 <main>
-	{#if wordList.length > 1}
+	{#if wordList.length > 0}
 		{#each wordList as word}
 			<Word {word} />
 		{/each}

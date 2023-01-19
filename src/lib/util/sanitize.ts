@@ -1,10 +1,10 @@
-import sanitizeHtml from 'sanitize-html';
+import sanitizeHtml from "sanitize-html";
 
 function sanitize(html: string) {
   return sanitizeHtml(html, {
     allowedTags: [],
     allowedAttributes: {},
-  })
+  });
 }
 
 function parse(data: string) {
@@ -41,4 +41,4 @@ function parseLinks(data: string) {
   return data;
 }
 
-export { parse }
+export { parse, sanitize }

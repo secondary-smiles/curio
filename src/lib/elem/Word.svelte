@@ -7,7 +7,6 @@
 	import { parse } from '$lib/util/sanitize';
 
 	import dayjs from 'dayjs';
-	import { onMount } from 'svelte';
 
 	export let word: Word;
 

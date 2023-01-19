@@ -10,6 +10,7 @@
 
 	import type { Word } from '$lib/util/word';
 	import { goto } from '$app/navigation';
+	import { sanitize } from '$lib/util/sanitize';
 
 	let errorText: string;
 
@@ -51,7 +52,10 @@
 		}
 
 		word = word.trim().split(' ').join('-');
+		word = sanitize(word);
+
 		def = def.trim();
+		def = sanitize(def);
 
 		if (word.length > 45) {
 			throw new Error(`word '${word.slice(0, 45)}..' must be shorter than 45 characters`);
