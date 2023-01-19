@@ -1,11 +1,12 @@
 import { initializeApp } from "firebase/app";
 
-import { getFirestore, collection, query, where, getDocs, addDoc, orderBy, limit, startAfter, } from "firebase/firestore/lite";
+import { getFirestore, collection, query, where, getDocs, addDoc, orderBy, limit, startAfter, deleteDoc, DocumentReference, } from "firebase/firestore/lite";
 
 import { DBNotFoundError } from "$lib/util/error";
 
 import type { Word, WordType } from '$lib/util/word';
 import { paginatedAllWordsStore, wordPaginationIndexStore } from "./store";
+import { currentUser } from "./firebase-auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCVpwVVAkJEGf9R40b2Lqes4NG1YtkXVos",
@@ -141,6 +142,28 @@ async function uploadWord(word: Word) {
   await addDoc(wordsRef, word);
 }
 
+async function deleteWord(word: Word) {
+  const deletedRef = collection(db, `deleted/${word.word}/${word.type.type}`);
+  await addDoc(deletedRef, word);
+
+  const wordsRef = collection(db, "words");
+  const q = query(
+    wordsRef,
+    where("word", "==", word.word),
+    where("type.abv", "==", word.type.abv),
+    where("uid", "==", currentUser!.uid),
+    limit(1)
+  );
+
+  const snapshot = await getDocs(q);
+  let refs: DocumentReference<unknown>[] = [];
+  snapshot.forEach((doc) => {
+    refs.push(doc.ref);
+  });
+
+  await deleteDoc(refs[0]);
+}
+
 async function getUserWords(uid: string, num: number = 10) {
   const wordsRef = collection(db, "words");
 
@@ -208,11 +231,12 @@ async function getNextUserWords(uid: string, num: number = 10) {
 }
 
 export {
+  app,
   getWord,
   searchWord,
-  app,
   wordExistsCount,
   uploadWord,
+  deleteWord,
   getLatestWords,
   getNextWords,
   getUserWords,

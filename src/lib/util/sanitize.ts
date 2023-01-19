@@ -27,15 +27,17 @@ function parseItalics(data: string) {
 }
 
 function parseLinks(data: string) {
-  const regex = new RegExp(/[^\{\{\}\}]+(?=})/gm);
+  // match double square brackets
+  const regex = new RegExp(/(\[\[(?:\[??[^\[]*?\]\]))/gm);
 
   let links = data.match(regex);
 
   if (links) {
     for (let i = 0; i < links.length; i++) {
-      const section = "{{" + links[i] + "}}";
-      const link = `<a href="/w/${links[i]}"i>${links[i]}</a>`;
-      data = data.replace(section, link);
+      const section = links[i].split("[").join("").split("]").join("");
+
+      const link = `<a href="/w/${section}">${section}</a>`;
+      data = data.replace(links[i], link);
     }
   }
   return data;

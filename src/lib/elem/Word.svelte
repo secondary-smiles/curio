@@ -7,6 +7,7 @@
 	import { parse } from '$lib/util/sanitize';
 
 	import dayjs from 'dayjs';
+	import { deleteWord } from '$lib/util/firebase';
 
 	export let word: Word;
 
@@ -42,8 +43,13 @@
 	</div>
 	<hr id="divider-top" />
 	<div id="word-def">
-		{@html def}
+		<p>{@html def}</p>
 	</div>
+	<button
+		on:click={() => {
+			deleteWord(word);
+		}}>delete</button
+	>
 	<hr id="divider-bottom" />
 </main>
 
