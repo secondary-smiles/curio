@@ -79,6 +79,27 @@
 
 		return true;
 	}
+
+	// Validate word-input as it's typed
+	$: {
+		const latest = word.slice(-1);
+		// Only allow alphanumeric and '-'
+		const code = latest.charCodeAt(0);
+
+		if (
+			!(code > 47 && code < 58) && // numeric (0-9)
+			!(code > 64 && code < 91) && // upper alpha (A-Z)
+			!(code > 96 && code < 123) && // lower alpha (a-z)
+			!(code == 45) // hyphen
+		) {
+			word = word.slice(0, -1);
+
+			if (code == 32) {
+				// replace space with hyphen
+				word += '-';
+			}
+		}
+	}
 </script>
 
 <main>
