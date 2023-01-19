@@ -4,7 +4,10 @@
 
 	import { ColorHash } from '$lib/util/color';
 
+	import { parse } from '$lib/util/sanitize';
+
 	import dayjs from 'dayjs';
+	import { onMount } from 'svelte';
 
 	export let word: Word;
 
@@ -14,12 +17,15 @@
 	const date: Timestamp = word.time as Timestamp;
 	let time: Date | string = date.toDate();
 	time = dayjs(time.toLocaleString()).format('YYYY-MM-DD, hh:mm');
+
+	let def = '';
+	$: def = parse(word.def);
 </script>
 
 <main>
 	<div id="title">
 		<h2 id="word-title">
-			<a href="/w/{word.word}">{word.word}</a>
+			<a id="title-link" href="/w/{word.word}">{word.word}</a>
 		</h2>
 
 		<p id="word-type">{word.type.abv}.</p>
@@ -37,7 +43,7 @@
 	</div>
 	<hr id="divider-top" />
 	<div id="word-def">
-		<p>{word.def}</p>
+		{@html def}
 	</div>
 	<hr id="divider-bottom" />
 </main>
@@ -65,6 +71,10 @@
 		margin-bottom: 0;
 	}
 
+	#title-link {
+		color: var(--text-color);
+	}
+
 	#word-type {
 		margin-top: 0;
 		color: var(--accent-color);
@@ -88,7 +98,7 @@
 		margin: 0 4px;
 	}
 
-		#color-display {
+	#color-display {
 		width: 10px;
 		height: 10px;
 

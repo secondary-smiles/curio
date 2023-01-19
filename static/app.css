@@ -4,6 +4,7 @@
   --text-color: #c1c7c6;
   --alt-text-color: #4c535e;
   --alt-accent-color: #4c535e;
+  --link-color: #82878f;
   --bg-color: #2c2f34;
 
   font-family: 'Aleo', serif;
@@ -72,6 +73,8 @@ a {
   text-decoration: none;
 
   font-weight: bold;
+
+  color: var(--link-color);
 }
 
 a:hover,
