@@ -1,7 +1,7 @@
 import {
   getAuth,
   GoogleAuthProvider,
-  signInWithPopup,
+  signInWithRedirect,
   signOut,
   browserLocalPersistence,
   setPersistence,
@@ -46,7 +46,7 @@ async function googleAuthUser() {
 
     const provider = new GoogleAuthProvider();
 
-    await signInWithPopup(auth, provider);
+    await signInWithRedirect(auth, provider);
   });
 }
 
