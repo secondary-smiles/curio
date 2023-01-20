@@ -7,6 +7,6 @@
 	{#if $verifiedStore}
 		<button id="sign-out-button" on:click={authSignOut}>sign out</button>
 	{:else}
-		<button id="sign-in-button"><a href="/s">sign in</a></button>
+		<a href="/s"><button id="sign-in-button">sign in</button></a>
 	{/if}
 </main>

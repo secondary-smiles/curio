@@ -69,7 +69,12 @@ textarea {
   outline: none;
 }
 
-a {
+.pseudolink {
+  cursor: pointer;
+}
+
+a,
+.pseudolink {
   text-decoration: none;
 
   font-weight: bold;
@@ -78,11 +83,14 @@ a {
 }
 
 a:hover,
-a:focus {
+a:focus,
+.pseudolink:hover,
+.peudolink:focus {
   text-decoration: underline;
 }
 
-a:active {
+a:active,
+.pseudolink:active {
   text-decoration-color: var(--accent-color);
 }
 

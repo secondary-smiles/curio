@@ -8,8 +8,11 @@
 
 	import dayjs from 'dayjs';
 	import { deleteWord } from '$lib/util/firebase';
+	import { currentUser } from '$lib/util/firebase-auth';
 
 	export let word: Word;
+
+	let alive = true;
 
 	const colorHash = new ColorHash();
 	const color = colorHash.hex(word.uid);
@@ -20,38 +23,57 @@
 
 	let def = '';
 	$: def = parse(word.def);
+
+	let deleteStatus = 'delete';
+
+	async function deleteThisWord() {
+		if (deleteStatus != 'confirm?') {
+			deleteStatus = 'confirm?';
+			return;
+		}
+
+		deleteStatus = 'deleting';
+
+		await deleteWord(word);
+		deleteStatus = 'deleted';
+
+		alive = false;
+	}
 </script>
 
-<main>
-	<div id="title">
-		<h2 id="word-title">
-			<a id="title-link" href="/w/{word.word}">{word.word}</a>
-		</h2>
+{#if alive}
+	<main>
+		<div id="title">
+			<h2 id="word-title">
+				<a id="title-link" href="/w/{word.word}">{word.word}</a>
+			</h2>
 
-		<p id="word-type">{word.type.abv}.</p>
-		<div id="user-info">
-			<div id="user-color">
-				<a href="/u/{word.uid}">
-					<div id="color-display" style="background: {color};" />
-					<p id="user-hex">{color}</p>
-				</a>
-			</div>
-			<div id="user-time">
-				<p id="posted-time">{time}</p>
+			<p id="word-type">{word.type.abv}.</p>
+			<div id="user-info">
+				<div id="user-color">
+					<a href="/u/{word.uid}">
+						<div id="color-display" style="background: {color};" />
+						<p id="user-hex">{color}</p>
+					</a>
+				</div>
+				<div id="user-time">
+					<p id="posted-time">{time}</p>
+				</div>
 			</div>
 		</div>
-	</div>
-	<hr id="divider-top" />
-	<div id="word-def">
-		<p>{@html def}</p>
-	</div>
-	<button
-		on:click={() => {
-			deleteWord(word);
-		}}>delete</button
-	>
-	<hr id="divider-bottom" />
-</main>
+		<hr id="divider-top" />
+		<div id="word-def">
+			<p>{@html def}</p>
+		</div>
+		{#if word.uid == currentUser?.uid}
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<p class="pseudolink" on:click={deleteThisWord}>
+				{deleteStatus}
+			</p>
+		{/if}
+		<hr id="divider-bottom" />
+	</main>
+{/if}
 
 <style>
 	main {
@@ -59,6 +81,10 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+	}
+
+	.pseudolink {
+		font-size: 0.8em;
 	}
 
 	#divider-top {
