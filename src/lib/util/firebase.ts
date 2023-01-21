@@ -6,9 +6,9 @@ import { DBNotFoundError } from "$lib/util/error";
 
 import type { Word, WordType } from '$lib/util/word';
 import { paginatedAllWordsStore, wordPaginationIndexStore } from "./store";
-import { currentUser } from "./firebase-auth";
+// import { currentUser } from "./firebase-auth";
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyCVpwVVAkJEGf9R40b2Lqes4NG1YtkXVos",
   authDomain: "curio-a6a8b.firebaseapp.com",
   projectId: "curio-a6a8b",
@@ -18,8 +18,12 @@ const firebaseConfig = {
   measurementId: "G-10R6P7KEK5"
 };
 
+function initApp(config: Object) {
+  return initializeApp(config);
+}
+
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = initApp(firebaseConfig);
 let db = getFirestore(app);
 
 // Util functions
@@ -143,6 +147,8 @@ async function uploadWord(word: Word) {
 }
 
 async function deleteWord(word: Word) {
+  const {currentUser} = await import('$lib/util/firebase-auth');
+  
   const deletedRef = collection(db, `deleted/${word.word}/${word.type.type}`);
   await addDoc(deletedRef, word);
 
@@ -231,7 +237,7 @@ async function getNextUserWords(uid: string, num: number = 10) {
 }
 
 export {
-  app,
+  initApp,
   getWord,
   searchWord,
   wordExistsCount,

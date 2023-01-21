@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Header from '$lib/elem/Header.svelte';
+
 	import { currentUser } from '$lib/util/firebase-auth';
 	import { authStore } from '$lib/util/store';
 

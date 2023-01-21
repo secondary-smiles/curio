@@ -34,7 +34,7 @@
 		"@types/dompurify": "^2.4.0",
 		"@types/sanitize-html": "^2.8.0",
 		"dayjs": "^1.11.7",
-		"firebase": "^9.15.0",
+		"firebase": "^9.16.0",
 		"sanitize-html": "^2.8.1"
 	}
 }

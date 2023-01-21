@@ -12,9 +12,10 @@ import {
 
 import type { User } from "firebase/auth";
 
-import { app } from "$lib/util/firebase";
+import { initApp, firebaseConfig } from "$lib/util/firebase";
 import { authStore, loadedAuthStore, verifiedStore } from "$lib/util/store";
 
+const app = initApp(firebaseConfig);
 const auth = getAuth(app);
 auth.useDeviceLanguage();
 
