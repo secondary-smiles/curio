@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { serverTimestamp } from 'firebase/firestore/lite';
+	import { serverTimestamp } from 'firebase/firestore';
 
 	import { currentUser } from '$lib/util/firebase-auth';
 
@@ -85,24 +85,31 @@
 	}
 
 	// Validate word-input as it's typed
-	$: {
-		const latest = word.slice(-1);
-		// Only allow alphanumeric and '-'
-		const code = latest.charCodeAt(0);
+	$: word = isValidChars(word);
 
-		if (
-			!(code > 47 && code < 58) && // numeric (0-9)
-			!(code > 64 && code < 91) && // upper alpha (A-Z)
-			!(code > 96 && code < 123) && // lower alpha (a-z)
-			!(code == 45) // hyphen
-		) {
-			word = word.slice(0, -1);
+	function isValidChars(data: string) {
+		let returnWord = '';
+		for (let i = 0; i < data.length; i++) {
+			let code = data.charCodeAt(i);
 
-			if (code == 32) {
-				// replace space with hyphen
-				word += '-';
+			if (
+				!(code > 47 && code < 58) && // numeric (0-9)
+				!(code > 64 && code < 91) && // upper alpha (A-Z)
+				!(code > 96 && code < 123) && // lower alpha (a-z)
+				!(code == 45) // hyphen
+			) {
+				// discard char
+
+				if (code == 32) {
+					// replace space with hyphen
+					returnWord += '-';
+				}
+			} else {
+				returnWord += data[i];
 			}
 		}
+
+		return returnWord;
 	}
 </script>
 

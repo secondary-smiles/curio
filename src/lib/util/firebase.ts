@@ -1,12 +1,23 @@
 import { initializeApp } from "firebase/app";
 
-import { getFirestore, collection, query, where, getDocs, addDoc, orderBy, limit, startAfter, deleteDoc, DocumentReference, } from "firebase/firestore/lite";
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs,
+  addDoc,
+  orderBy,
+  limit,
+  startAfter,
+  deleteDoc,
+  DocumentReference,
+} from "firebase/firestore";
 
 import { DBNotFoundError } from "$lib/util/error";
 
 import type { Word, WordType } from '$lib/util/word';
 import { paginatedAllWordsStore, wordPaginationIndexStore } from "./store";
-// import { currentUser } from "./firebase-auth";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCVpwVVAkJEGf9R40b2Lqes4NG1YtkXVos",
@@ -17,7 +28,6 @@ export const firebaseConfig = {
   appId: "1:1075874528385:web:fd825b67752b97e66ea180",
   measurementId: "G-10R6P7KEK5"
 };
-
 function initApp(config: Object) {
   return initializeApp(config);
 }
@@ -67,6 +77,8 @@ async function searchWord(name: string) {
   return results;
 }
 
+
+// TODO: Just check if write succeeds instead of unnecessary api call. The docs are discareded anyways
 async function wordExistsCount(word: string, type: WordType) {
   const wordsRef = collection(db, "words");
   const q = query(
@@ -147,8 +159,8 @@ async function uploadWord(word: Word) {
 }
 
 async function deleteWord(word: Word) {
-  const {currentUser} = await import('$lib/util/firebase-auth');
-  
+  const { currentUser } = await import('$lib/util/firebase-auth');
+
   const deletedRef = collection(db, `deleted/${word.word}/${word.type.type}`);
   await addDoc(deletedRef, word);
 
