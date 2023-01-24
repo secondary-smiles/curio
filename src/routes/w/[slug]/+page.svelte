@@ -8,6 +8,7 @@
 
 <svelte:head>
 	<title>{data.words[0].word} - The Curio</title>
+	<meta name="description" content="The Curio - {data.words[0].word}: {data.words[0].def}" />
 </svelte:head>
 
 <main>

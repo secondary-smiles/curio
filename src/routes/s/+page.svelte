@@ -23,6 +23,7 @@
 
 <svelte:head>
 	<title>{titleState} - The Curio</title>
+	<meta name="description" content="The Curio - Submit a word to add it to the global dictionary" />
 </svelte:head>
 
 <main>

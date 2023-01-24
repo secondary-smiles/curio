@@ -21,6 +21,7 @@
 
 <svelte:head>
 	<title>{data.hex} - The Curio</title>
+	<meta name="description" content="The Curio - Words submitted by user '{data.hex}'" />
 </svelte:head>
 
 <main>

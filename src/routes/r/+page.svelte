@@ -11,6 +11,7 @@
 
 <svelte:head>
 	<title>{data.query} Results - The Curio</title>
+	<meta name="description" content="The Curio - Word search results for '{data.query}'" />
 </svelte:head>
 
 <main>

@@ -21,6 +21,7 @@
 
 <svelte:head>
 	<title>home Page - The Curio</title>
+	<meta name="description" content="The Curio - A collection of language" />
 </svelte:head>
 
 <main>
