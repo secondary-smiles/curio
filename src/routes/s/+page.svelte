@@ -10,7 +10,20 @@
 
 	let authLoaded: boolean;
 	loadedAuthStore.subscribe((value) => (authLoaded = value));
+
+	let titleState = 'sign in';
+	$: {
+		if ($authStore && $verifiedStore) {
+			titleState = 'submit word';
+		} else {
+			titleState = 'sign in';
+		}
+	}
 </script>
+
+<svelte:head>
+	<title>{titleState} - The Curio</title>
+</svelte:head>
 
 <main>
 	{#if authLoaded}

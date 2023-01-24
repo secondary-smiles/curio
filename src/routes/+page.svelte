@@ -19,6 +19,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>home Page - The Curio</title>
+</svelte:head>
+
 <main>
 	{#if wordList.length > 0}
 		{#each wordList as word}

@@ -9,6 +9,10 @@
 	$: resultString = data.words.length == 1 ? 'result' : 'results';
 </script>
 
+<svelte:head>
+	<title>{data.query} Results - The Curio</title>
+</svelte:head>
+
 <main>
 	<div id="title">
 		<h2 id="result-title">Results for '{data.query}'</h2>

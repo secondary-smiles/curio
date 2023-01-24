@@ -19,6 +19,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>{data.hex} - The Curio</title>
+</svelte:head>
+
 <main>
 	{#if wordList.length > 0}
 		<div id="title">
