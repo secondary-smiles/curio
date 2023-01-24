@@ -116,7 +116,6 @@
 
 <style>
 	input {
-		width: 20%;
 		outline: none;
 	}
 

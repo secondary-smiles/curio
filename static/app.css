@@ -55,7 +55,7 @@ button:disabled {
 
 input,
 textarea {
-  width: 65%;
+  /*width: 65%;*/
   border: 2px solid var(--alt-accent-color);
   padding: 0.5em;
 

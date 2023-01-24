@@ -159,8 +159,6 @@
 	}
 
 	input {
-		width: 15%;
-
 		text-align: center;
 	}
 
