@@ -80,7 +80,7 @@ async function searchWord(name: string) {
 }
 
 
-// TODO: Just check if write succeeds instead of unnecessary api call. The docs are discareded anyways
+// TODO: Just check if write succeeds instead of unnecessary api call. The docs are discarded anyways
 async function wordExistsCount(word: string, type: WordType) {
   const wordsRef = collection(db, "words");
   const q = query(

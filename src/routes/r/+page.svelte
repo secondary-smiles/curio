@@ -27,6 +27,7 @@
 			</div>
 		{/each}
 	</div>
+	<p class="subtext">this search function sucks, i'm working on improving it right now.<p>
 </main>
 
 <style>

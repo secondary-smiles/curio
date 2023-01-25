@@ -12,6 +12,7 @@
 	import { goto } from '$app/navigation';
 	import { sanitize } from '$lib/util/sanitize';
 
+  import SubmitGuidelines from '$lib/elem/SubmitGuidelines.svelte';
 	let errorText: string;
 
 	export let word: string = '';
@@ -137,6 +138,9 @@
 		<textarea placeholder="word definition.." bind:value={def} />
 		<button id="submit-button" type="submit">submit</button>
 	</form>
+	<div id="guidelines">
+		<SubmitGuidelines />
+	</div>
 </main>
 
 <style>
