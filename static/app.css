@@ -100,4 +100,6 @@ a:active,
 
 .subtext {
   color: var(--alt-accent-color);
+
+  text-align: center;
 }

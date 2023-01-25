@@ -3,7 +3,7 @@
 
 	import { currentUser } from '$lib/util/firebase-auth';
 
-	import { uploadWord, wordExistsCount } from '$lib/util/firebase';
+	import { maxNumber, uploadWord, wordExistsCount } from '$lib/util/firebase';
 
 	import { wordMap } from '$lib/util/word';
 	import type { WordType } from '$lib/util/word';
@@ -38,7 +38,8 @@
 			def: def,
 			query: word.toLowerCase(),
 			time: serverTimestamp(),
-			uid: currentUser!.uid ?? 'unknown'
+			uid: currentUser!.uid ?? 'unknown',
+			random: Math.random() * maxNumber,
 		};
 
 		await uploadWord(newWord).then(() => {

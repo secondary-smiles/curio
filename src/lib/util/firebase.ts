@@ -19,6 +19,8 @@ import { DBNotFoundError } from "$lib/util/error";
 import type { Word, WordType } from '$lib/util/word';
 import { paginatedAllWordsStore, wordPaginationIndexStore } from "./store";
 
+export const maxNumber = 1_000_000_000; // One Billion for randomly selecting documents
+
 export const firebaseConfig = {
   apiKey: "AIzaSyCVpwVVAkJEGf9R40b2Lqes4NG1YtkXVos",
   authDomain: "curio-a6a8b.firebaseapp.com",
@@ -153,6 +155,30 @@ async function getNextWords(num: number = 10) {
   return results;
 }
 
+async function getRandomWords(num: number = 3, orderBy: ">=" | "<=" = "<="): Promise<Word[]> {
+  const wordsRef = collection(db, "words");
+  const randomIndex = Math.random() * maxNumber;
+
+  const q = query(
+    wordsRef,
+    where("random", orderBy, randomIndex),
+    limit(num)
+  );
+
+  let snapshot = await getDocs(q);
+
+  let results: Word[] = [];
+  snapshot.forEach((doc) => {
+    results.push(doc.data() as Word);
+  })
+
+  if (results.length < 1 && orderBy == "<=") {
+    return await getRandomWords(num = num, orderBy = ">=");
+  }
+
+  return results;
+}
+
 async function uploadWord(word: Word) {
   const wordsRef = collection(db, "words");
   await addDoc(wordsRef, word);
@@ -253,6 +279,7 @@ export {
   getWord,
   searchWord,
   wordExistsCount,
+  getRandomWords,
   uploadWord,
   deleteWord,
   getLatestWords,

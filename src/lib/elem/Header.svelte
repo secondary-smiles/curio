@@ -2,6 +2,7 @@
 	import LogOutButton from './LogOutButton.svelte';
 	import SearchButton from './SearchButton.svelte';
 	import SubmitWordButton from './SubmitWordButton.svelte';
+	import RandomButton from './RandomButton.svelte';
 </script>
 
 <main>
@@ -14,6 +15,9 @@
 		<div id="header-buttons">
 			<div id="search-button">
 				<SearchButton />
+			</div>
+			<div id="random-button">
+				<RandomButton />
 			</div>
 			<div id="submit-button">
 				<SubmitWordButton />

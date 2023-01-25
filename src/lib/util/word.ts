@@ -15,6 +15,7 @@ interface Word {
   query: string;
   time: Timestamp | FieldValue;
   uid: string;
+  random: number;
 }
 
 export const wordMap: WordType[] = [
