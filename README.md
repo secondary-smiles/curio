@@ -31,6 +31,8 @@ I really like website concepts such as [Urban Dictionary](https://www.urbandicti
 
 - [ ] 🦾 Make site more accesible + improve mobile view
 
+- [ ] 🚨 Improve backend security
+
 ## 🛠️ Contributing
 
 Contributions are always welcome! If you spot an issue in the website also feel free to file an issue. I promise I'm not a cranky dev who hates people filing issues.
