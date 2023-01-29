@@ -37,6 +37,7 @@
 		"@types/sanitize-html": "^2.8.0",
 		"dayjs": "^1.11.7",
 		"firebase": "^9.16.0",
+		"firebase-tools": "^11.21.0",
 		"sanitize-html": "^2.8.1",
 		"vercel": "^28.13.1"
 	}
