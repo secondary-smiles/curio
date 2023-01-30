@@ -1,6 +1,8 @@
 import * as functions from "firebase-functions";
 
-import sanitizeHtml from 'sanitize-html';
+import { sanitize, validateWord } from "./util/helpers";
+
+import type { Word } from "./util/word";
 
 // // Start writing functions
 // // https://firebase.google.com/docs/functions/typescript
@@ -9,23 +11,6 @@ import sanitizeHtml from 'sanitize-html';
 //   functions.logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
 // });
-
-type WordTypeAbv = "n" | "v" | "adj" | "adv" | "prep" | "ideo" | "interj" | "pn";
-type WordTypeWords = "noun" | "verb" | "adjective" | "adverb" | "preposition" | "ideophone" | "interjection" | "pronoun";
-
-interface WordType {
-  type: WordTypeWords;
-  abv: WordTypeAbv
-}
-
-interface Word {
-  word: string;
-  type: WordType;
-  def: string;
-  query: string;
-  uid: string;
-  random: number;
-}
 
 exports.onCreateWord = functions.firestore
   .document('words/{word}')
@@ -53,19 +38,3 @@ exports.onCreateWord = functions.firestore
     return;
   })
 
-function sanitize(html: string) {
-  return sanitizeHtml(html, {
-    allowedTags: [],
-    allowedAttributes: {},
-  });
-}
-
-function validateWord(data: Word) {
-  if (data.word.length > 45 || data.word.length < 3) {
-    throw new Error("incorrect word length");
-  }
-
-  if (data.def.length > 2000 || data.def.split(" ").length < 3) {
-    throw new Error("incorrect def length");
-  }
-}
