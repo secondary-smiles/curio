@@ -31,7 +31,11 @@ I really like website concepts such as [Urban Dictionary](https://www.urbandicti
 
 - [ ] 🦾 Make site more accesible + improve mobile view
 
-- [X] 🚨 Improve backend security
+- [ ] 🚩 Implement word flagging
+
+- [ ] 💖 Implement word likes
+
+- [x] 🚨 Improve backend security
 
 ## 🛠️ Contributing
 
