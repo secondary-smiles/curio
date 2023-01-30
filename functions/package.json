@@ -16,6 +16,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "@types/sanitize-html": "^2.8.0",
+    "censor-sensor": "^1.0.6",
     "firebase": "^9.16.0",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.18.0",
