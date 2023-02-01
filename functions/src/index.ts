@@ -43,10 +43,11 @@ exports.onCreateWord = functions.firestore
       deleteSnap(snap);
     }
 
-    return;
+    return true;
   })
 
 function deleteSnap(snap: functions.firestore.QueryDocumentSnapshot) {
   functions.logger.error("DELETING invalid word", snap.data());
   snap.ref.delete();
+  throw new Error("Aborting..")
 }

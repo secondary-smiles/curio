@@ -15,12 +15,12 @@
 </svelte:head>
 
 <main>
-	<div id="title">
-		<h2 id="result-title">Results for '{data.query}'</h2>
-		<p id="result-count">{data.words.length} {resultString}</p>
+	<div class="title">
+		<h2 class="result-title">Results for '{data.query}'</h2>
+		<p class="result-count">{data.words.length} {resultString}</p>
 	</div>
 
-	<div id="results">
+	<div class="results">
 		{#each data.words as word}
 			<div class="result-word">
 				<Word {word} />
@@ -31,15 +31,15 @@
 </main>
 
 <style>
-	#title {
+	.title {
 		text-align: center;
 	}
 
-	#result-title {
+	.result-title {
 		margin-bottom: 0;
 	}
 
-	#result-count {
+	.result-count {
 		margin-top: 0;
 		color: var(--accent-color);
 	}

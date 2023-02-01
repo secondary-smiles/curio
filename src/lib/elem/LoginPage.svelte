@@ -82,10 +82,10 @@
 </script>
 
 <main>
-	<div id="title">
+	<div class="title">
 		<h2>{pageModes[currentMode]}</h2>
 	</div>
-	<div id="error-display">
+	<div class="error-display">
 		{#if errorText}
 			{#key repeatCount}
 				<p class="error-text">
@@ -94,22 +94,22 @@
 			{/key}
 		{/if}
 	</div>
-	<div id="email-verify">
+	<div class="email-verify">
 		{#if $authStore && !$verifiedStore}
-			<button on:click={emailVerifyUser} id="verify-button">resend verification email</button>
+			<button on:click={emailVerifyUser} class="verify-button">resend verification email</button>
 		{/if}
 	</div>
-	<div id="email-password-form-wrapper">
-		<form on:submit|preventDefault={login} id="email-password-form">
+	<div class="email-password-form-wrapper">
+		<form on:submit|preventDefault={login} class="email-password-form">
 			<input type="text" bind:value={email} placeholder="email" autocomplete="off" />
 			<input type="password" bind:value={password} placeholder="password" autocomplete="off" />
-			<div id="signin-buttons">
-				<button id="submit-button" type="submit">submit</button>
+			<div class="signin-buttons">
+				<button class="submit-button" type="submit">submit</button>
 				<button on:click={googleAuthUser} type="button">Sign In With Google</button>
 			</div>
 		</form>
 	</div>
-	<div id="mode-buttons">
+	<div class="mode-buttons">
 		<button on:click={switchMode}>{pageModes[Math.abs(currentMode - 1)]}</button>
 	</div>
 </main>
@@ -127,13 +127,13 @@
 		margin: 5px 0;
 	}
 
-	#email-password-form {
+	.email-password-form {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
 	}
 
-	#email-password-form > * {
+	.email-password-form > * {
 		box-sizing: border-box;
 
 		margin: 5px 0;

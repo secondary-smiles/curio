@@ -43,26 +43,26 @@
 
 {#if alive}
 	<main>
-		<div id="title">
-			<h2 id="word-title">
-				<a id="title-link" href="/w/{word.word}">{word.word}</a>
+		<div class="title">
+			<h2 class="word-title">
+				<a class="title-link" href="/w/{word.word}">{word.word}</a>
 			</h2>
 
-			<p id="word-type">{word.type.abv}.</p>
-			<div id="user-info">
-				<div id="user-color">
+			<p class="word-type">{word.type.abv}.</p>
+			<div class="user-info">
+				<div class="user-color">
 					<a href="/u/{word.uid}">
-						<div id="color-display" style="background: {color};" />
-						<p id="user-hex">{color}</p>
+						<div class="color-display" style="background: {color};" />
+						<p class="user-hex">{color}</p>
 					</a>
 				</div>
-				<div id="user-time">
-					<p id="posted-time">{time}</p>
+				<div class="user-time">
+					<p class="posted-time">{time}</p>
 				</div>
 			</div>
 		</div>
-		<hr id="divider-top" />
-		<div id="word-def">
+		<hr class="divider-top" />
+		<div class="word-def">
 			<p>{@html def}</p>
 		</div>
 		{#if word.uid == currentUser?.uid}
@@ -71,7 +71,7 @@
 				{deleteStatus}
 			</p>
 		{/if}
-		<hr id="divider-bottom" />
+		<hr class="divider-bottom" />
 	</main>
 {/if}
 
@@ -87,49 +87,49 @@
 		font-size: 0.8em;
 	}
 
-	#divider-top {
+	.divider-top {
 		width: 15%;
 	}
 
-	#divider-bottom {
+	.divider-bottom {
 		width: 25%;
 
 		border: 0;
 		border-top: 2px solid var(--accent-color);
 	}
 
-	#word-title {
+	.word-title {
 		margin-bottom: 0;
 	}
 
-	#title-link {
+	.title-link {
 		color: var(--text-color);
 	}
 
-	#word-type {
+	.word-type {
 		margin-top: 0;
 		color: var(--accent-color);
 	}
 
-	#word-def {
+	.word-def {
 		max-width: 300px;
 		word-break: break-word;
 	}
 
-	#user-info {
+	.user-info {
 		display: flex;
 		justify-content: space-between;
 
 		cursor: pointer;
 	}
 
-	#user-color > a {
+	.user-color > a {
 		display: flex;
 		align-items: center;
 		margin: 0 4px;
 	}
 
-	#color-display {
+	.color-display {
 		width: 10px;
 		height: 10px;
 
@@ -138,12 +138,12 @@
 		margin: 2px;
 	}
 
-	#user-hex,
-	#posted-time {
+	.user-hex,
+	.posted-time {
 		color: var(--alt-accent-color);
 	}
 
-	#user-time {
+	.user-time {
 		margin: 0 4px;
 	}
 </style>

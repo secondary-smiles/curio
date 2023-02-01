@@ -7,22 +7,22 @@
 
 <main>
 	<hr />
-	<div id="header-inner">
-		<div id="title">
-			<a href="/"><p id="title-name">The Curio</p></a>
-			<p id="title-meta">a collection of language</p>
+	<div class="header-inner">
+		<div class="title">
+			<a href="/"><p class="title-name">The Curio</p></a>
+			<p class="title-meta">a collection of language</p>
 		</div>
-		<div id="header-buttons">
-			<div id="search-button">
+		<div class="header-buttons">
+			<div class="search-button">
 				<SearchButton />
 			</div>
-			<div id="random-button">
+			<div class="random-button">
 				<RandomButton />
 			</div>
-			<div id="submit-button">
+			<div class="submit-button">
 				<SubmitWordButton />
 			</div>
-			<div id="logout-button">
+			<div class="logout-button">
 				<LogOutButton />
 			</div>
 		</div>
@@ -35,37 +35,37 @@
 		text-decoration: none;
 	}
 
-	#header-buttons {
+	.header-buttons {
 		display: flex;
 		align-items: center;
 	}
 
-	#header-buttons > * {
+	.header-buttons > * {
 		margin: 0 4px;
 	}
 
-	#header-inner {
+	.header-inner {
 		display: flex;
 		justify-content: space-evenly;
 	}
 
-	#title {
+	.title {
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
 	}
 
-	#title p {
+	.title p {
 		margin: 0;
 		padding: 0.5em;
 	}
 
-	#title-name {
+	.title-name {
 		font-weight: bold;
 		color: var(--accent-color);
 	}
 
-	#title-meta {
+	.title-meta {
 		color: var(--alt-text-color);
 	}
 </style>

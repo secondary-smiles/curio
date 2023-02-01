@@ -116,15 +116,15 @@
 </script>
 
 <main>
-	<div id="title">
+	<div class="title">
 		<h2>Submit a Word</h2>
 	</div>
-	<div id="error-display">
+	<div class="error-display">
 		{#if errorText}
 			<p class="error-text">{errorText}</p>
 		{/if}
 	</div>
-	<form id="word-form" on:submit|preventDefault={submit}>
+	<form class="word-form" on:submit|preventDefault={submit}>
 		<input type="text" placeholder="word.." autocomplete="off" bind:value={word} />
 
 		<select bind:value={type}>
@@ -136,30 +136,30 @@
 			{/each}
 		</select>
 		<textarea placeholder="word definition.." bind:value={def} />
-		<button id="submit-button" type="submit">submit</button>
+		<button class="submit-button" type="submit">submit</button>
 	</form>
-	<div id="guidelines">
+	<div class="guidelines">
 		<SubmitGuidelines />
 	</div>
 </main>
 
 <style>
-	#title {
+	.title {
 		text-align: center;
 	}
 
-	#error-display {
+	.error-display {
 		text-align: center;
 		overflow-wrap: break-word;
 	}
 
-	#word-form {
+	.word-form {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 	}
 
-	#word-form > * {
+	.word-form > * {
 		margin: 5px 0;
 	}
 

@@ -48,10 +48,10 @@
 </script>
 
 <main>
-	<div id="header">
+	<div class="header">
 		<Header />
 	</div>
-	<div id="content">
+	<div class="content">
 		<slot />
 	</div>
 </main>

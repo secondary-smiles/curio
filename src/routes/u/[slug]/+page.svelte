@@ -26,13 +26,13 @@
 
 <main>
 	{#if wordList.length > 0}
-		<div id="title">
+		<div class="title">
 			<h2>Words Submitted by</h2>
-			<div id="user-colors">
-				<div id="color-disp" style="background: {data.hex};" />
-				<h2 id="user-hex">{data.hex}</h2>
+			<div class="user-colors">
+				<div class="color-disp" style="background: {data.hex};" />
+				<h2 class="user-hex">{data.hex}</h2>
 			</div>
-			<hr id="divider" />
+			<hr class="divider" />
 		</div>
 		{#each wordList as word}
 			<Word {word} />
@@ -52,22 +52,22 @@
 		text-align: center;
 	}
 
-	#divider {
+	.divider {
 		width: 45%;
 	}
 
-	#user-colors {
+	.user-colors {
 		display: flex;
 
 		justify-content: center;
 		align-items: center;
 	}
 
-	#user-hex {
+	.user-hex {
 		margin: 0 4px;
 	}
 
-	#color-disp {
+	.color-disp {
 		width: 15px;
 		height: 15px;
 

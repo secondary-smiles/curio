@@ -24,12 +24,12 @@
 
 <main>
 	{#if !searchMode}
-		<button id="search-button" on:click={toggleSearchMode}>search </button>
+		<button class="search-button" on:click={toggleSearchMode}>search </button>
 	{/if}
 	{#if searchMode}
 		<form on:submit={search}>
 			<input
-				id="search-box"
+				class="search-box"
 				type="text"
 				name="query"
 				placeholder="search for a word.."
@@ -46,6 +46,5 @@
 	input:hover,
 	input:focus {
 		width: 95%;
-
 	}
 </style>
