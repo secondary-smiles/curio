@@ -19,7 +19,7 @@
 
 	const date: Timestamp = word.time as Timestamp;
 	let time: Date | string = date.toDate();
-	time = dayjs(time.toLocaleString()).format('YYYY-MM-DD, hh:mm');
+	time = dayjs(time.toLocaleString()).format('YYYY-MM-DD, hh:mma');
 
 	let def = '';
 	$: def = parse(word.def);
