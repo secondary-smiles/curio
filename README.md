@@ -29,7 +29,9 @@ I really like website concepts such as [Urban Dictionary](https://www.urbandicti
 
 - [ ] 🧹 Clean up client-side code
 
-- [ ] 🦾 Make site more accesible + improve mobile view
+- [x] 🦾 Make site more accesible 
+
+- [ ] 🚙 improve mobile view
 
 - [ ] 🚩 Implement word flagging
 
