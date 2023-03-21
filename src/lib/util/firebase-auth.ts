@@ -1,13 +1,13 @@
 import {
   getAuth,
   GoogleAuthProvider,
-  signInWithRedirect,
   signOut,
   browserLocalPersistence,
   setPersistence,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  signInWithPopup,
 } from "firebase/auth";
 
 import type { User } from "firebase/auth";
@@ -47,7 +47,7 @@ async function googleAuthUser() {
 
     const provider = new GoogleAuthProvider();
 
-    await signInWithRedirect(auth, provider);
+    await signInWithPopup(auth, provider);
   });
 }
 
