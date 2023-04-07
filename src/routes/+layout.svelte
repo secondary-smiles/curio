@@ -54,4 +54,14 @@
 	<div class="content">
 		<slot />
 	</div>
+	<hr />
+	<div class="footer">
+		<a href="https://trinket.icu">trinket</a>
+	</div>
 </main>
+
+<style>
+	.footer {
+		text-align: center;
+	}
+</style>
